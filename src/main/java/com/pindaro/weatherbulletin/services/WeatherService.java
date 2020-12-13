@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pindaro.weatherbulletin.clients.WeatherClient;
-import com.pindaro.weatherbulletin.model.PayLoad;
+import com.pindaro.weatherbulletin.model.Payload;
 
 
 
@@ -13,8 +13,8 @@ public class WeatherService {
 	@Autowired
 	WeatherClient client;
 	
-	public PayLoad chiamaIlClient() {
-		return client.weatherHourly("Milano");
+	public Payload chiamaIlClient() {
+		return client.weatherHourly(33.441792,-94.037689);
 	}
 	
 }

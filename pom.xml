@@ -51,11 +51,6 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>io.springfox</groupId> -->
-		<!-- <artifactId>springfox-boot-starter</artifactId> -->
-		<!-- <version>3.0.0</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
@@ -69,6 +64,11 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.javatuples</groupId>
+			<artifactId>javatuples</artifactId>
+			<version>1.2</version>
 		</dependency>
 	</dependencies>
 
@@ -86,25 +86,22 @@
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>${dockerfile-maven-version}</version>
+				<version>1.4.3</version>
 				<executions>
 					<execution>
 						<id>default</id>
 						<goals>
 							<goal>build</goal>
-							<goal>push</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<repository>spotify/foobar</repository>
+					<repository>docker.io/kkapelon/docker-maven-comparison</repository>
 					<tag>${project.version}</tag>
-					<buildArgs>
-						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>

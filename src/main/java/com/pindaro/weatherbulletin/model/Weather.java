@@ -1,10 +1,14 @@
+
 package com.pindaro.weatherbulletin.model;
 
+import lombok.Getter;
+
+@Getter
 public class Weather {
-	
-        long id;
-        String main;
-        String Description;
-        String icon;
-   
+
+    public long id;
+    public String main;
+    public String description;
+    public String icon;
+
 }
