@@ -13,8 +13,8 @@ public class WeatherService {
 	@Autowired
 	WeatherClient client;
 	
-	public Payload chiamaIlClient() {
-		return client.weatherHourly(33.441792,-94.037689);
+	public Payload chiamaIlClient(float lat, float lon) {
+		return client.weatherHourly(lat,lon);
 	}
 	
 }

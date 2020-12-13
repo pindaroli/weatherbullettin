@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pindaro.weatherbulletin.model.Hourly;
@@ -13,16 +15,21 @@ import com.pindaro.weatherbulletin.model.Payload;
 import com.pindaro.weatherbulletin.model.WeatherResponse;
 import com.pindaro.weatherbulletin.services.WeatherService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping("/api")
+@Api(value = "User Resource REST Endpoint", description = "Dà le previstioni per i prossimi due giorni")
 public class bulletinController {
 	@Autowired
 	WeatherService serv;
 	
 
-	@RequestMapping("/hello")
-	public WeatherResponse index() {
-		Payload payload=serv.chiamaIlClient();
+	@GetMapping("/weatherBullettin")
+	public WeatherResponse index(@RequestParam(defaultValue="45.464664",name = "lat") String latitudine ,
+			@RequestParam(defaultValue = "9.188540",name ="lon") String longitudine ) {
+		System.out.println("arg"+latitudine+"----"+longitudine);
+		Payload payload=serv.chiamaIlClient(Float.parseFloat(latitudine),Float.parseFloat(longitudine));
 		
 		Stream<Hourly> s=payload.hourly.stream();
 	
