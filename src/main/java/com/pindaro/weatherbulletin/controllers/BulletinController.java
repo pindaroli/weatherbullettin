@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 @RestController
 @RequestMapping("/api")
 @Api(value = "User Resource REST Endpoint", description = "Dà le previstioni per i prossimi due giorni")
-public class bulletinController {
+public class BulletinController {
 	@Autowired
 	WeatherService serv;
 	

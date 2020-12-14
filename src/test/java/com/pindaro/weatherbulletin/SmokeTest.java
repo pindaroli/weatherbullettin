@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.pindaro.weatherbulletin.controllers.bulletinController;
+import com.pindaro.weatherbulletin.controllers.BulletinController;
 
 @SpringBootTest
 public class SmokeTest {
 
 	@Autowired
-	private bulletinController controller;
+	private BulletinController controller;
 
 	@Test
 	public void contextLoads() throws Exception {
