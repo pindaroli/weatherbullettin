@@ -87,7 +87,15 @@
 
 	<build>
 		<plugins>
-
+			
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>             
+					<configuration>    
+						<mainClass>com.pindaro.weatherbulletin.services.WeatherService.WeatherbulletinApplication</mainClass>
+					</configuration>
+				</plugin>
+		
 <!-- 			<plugin> -->
 <!-- 				<groupId>com.spotify</groupId> -->
 <!-- 				<artifactId>dockerfile-maven-plugin</artifactId> -->
