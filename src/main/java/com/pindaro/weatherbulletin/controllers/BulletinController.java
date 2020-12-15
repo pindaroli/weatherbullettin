@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,11 @@ public class BulletinController {
 	@Autowired
 	WeatherService serv;
 	
+	@Value( "${workingHourStart}")
+	private String workingHourStartString;
+	
+	@Value( "${workingHourStop}" )
+	private String workingHourStopString;
 
 	@GetMapping("/weatherBullettin")
 	public WeatherResponse index(@RequestParam(defaultValue="45.464664",name = "lat") String latitudine ,
@@ -31,13 +37,15 @@ public class BulletinController {
 		System.out.println("arg"+latitudine+"----"+longitudine);
 		Payload payload=serv.chiamaIlClient(Float.parseFloat(latitudine),Float.parseFloat(longitudine));
 		
+		int workingHourStart=Integer.parseInt(workingHourStartString);
+		int workingHourStop=Integer.parseInt(workingHourStopString);
+		
 		Stream<Hourly> s=payload.hourly.stream();
 	
 		List<Hourly> listFilter = s.filter(
 				 (ele)->  {
-					 	long ora=(ele.dt/3600)%24;
-					 	System.out.println("numero ora:"+ora); 
-					 	return (ora >= 9 && ora<=18);
+					 	long ora=(ele.dt/3600)%24; 
+					 	return (ora >= workingHourStart && ora<=workingHourStop);
 					 }).collect(Collectors.toList());
 		 
 		 WeatherResponse resp=new WeatherResponse();
@@ -54,10 +62,9 @@ public class BulletinController {
 		listFilter = s2.filter(
 					 (ele)->  {
 						 	long ora=(ele.dt/3600)%24;
-						 	System.out.println("numero ora:"+ora); 
-						 	return (ora < 9 || ora>18);
+						 	return (ora < workingHourStart || ora>workingHourStop);
 						 }).collect(Collectors.toList());
-		System.out.println("*******"+listFilter.size());
+		
 		resp.getNonLavorativo().setMinTemp(listFilter.stream().map(ele->ele.temp).min(Double::compareTo).get());
 		resp.getNonLavorativo().setMaxTemp(listFilter.stream().map(ele->ele.temp).max(Double::compareTo).get());
 		 resp.getNonLavorativo().setMaxUmidity(listFilter.stream().map(ele->ele.humidity).max(Long::compareTo).get());
