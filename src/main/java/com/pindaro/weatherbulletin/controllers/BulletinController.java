@@ -26,10 +26,10 @@ public class BulletinController {
 	WeatherService serv;
 	
 	@Value( "${workingHourStart}")
-	private String workingHourStartString;
+	private int workingHourStart;
 	
 	@Value( "${workingHourStop}" )
-	private String workingHourStopString;
+	private int workingHourStop;
 
 	@GetMapping("/weatherBullettin")
 	public WeatherResponse index(@RequestParam(defaultValue="45.464664",name = "lat") String latitudine ,
@@ -37,8 +37,7 @@ public class BulletinController {
 		System.out.println("arg"+latitudine+"----"+longitudine);
 		Payload payload=serv.chiamaIlClient(Float.parseFloat(latitudine),Float.parseFloat(longitudine));
 		
-		int workingHourStart=Integer.parseInt(workingHourStartString);
-		int workingHourStop=Integer.parseInt(workingHourStopString);
+		
 		
 		Stream<Hourly> s=payload.hourly.stream();
 	
